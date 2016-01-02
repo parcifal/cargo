@@ -39,3 +39,6 @@ local.properties
 
 # STS (Spring Tool Suite)
 .springBeans
+
+# Local testing directory
+local-test/
