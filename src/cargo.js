@@ -1,58 +1,91 @@
+// the initiation methods to be called when the document is ready
 var initiations = [];
-var scripts = [];
-var links = [];
 
+// the elements to be appended to the document's head when the document is ready
+var elements = [];
+
+// indicates whether or not the document has loaded all its resources
 var ready = false;
 
+// call all initiation functions and load all elements when the document is
+// ready
 window.onload = function() {
-	for(var i = 0; i < initiations.length; i++) {
+	ready = true;
+
+	for (var i = 0; i < initiations.length; i++) {
 		initiations[i]();
 	}
-	
-	ready = true;
-	
-	notify();
+
+	for (var i = 0; i < elements.length; i++) {
+		document.head.appendChild(elements[i]);
+	}
 };
 
-function notify() {
-	if(ready) {
-		for(var i = 0; i < scripts.length; i++) {
-			document.head.appendChild(scripts[i]);
-		}
-		
-		scripts = [];
-		
-		for(var i = 0; i < links.length; i++) {
-			document.head.appendChild(links[i]);
-		}
-		
-		links = [];
+/**
+ * The specified function will be called when the document is ready. If the
+ * document is already ready it will be called immediately.
+ * 
+ * @param initiate
+ *            The function the be called when the document is ready.
+ */
+function onReady(initiate) {
+	if (ready) {
+		initiate();
+	} else {
+		initiations.push(initiate);
 	}
 }
 
-function onReady(method) {
-	initiations.push(method);
-}
-
+/**
+ * Load the script at the specified source when the document is ready.
+ * 
+ * @param src
+ *            The source of the script to be loaded.
+ * @param async
+ *            Whether or not the script should run asynchronous.
+ */
 function loadScript(src, async) {
 	var script = document.createElement("script");
-	
+
 	script.src = src;
-	script.async = async;
-	
-	scripts.push(script);
-	
-	notify();
+
+	if (async === undefined) {
+		script.async = async;
+	}
+
+	loadElement(script);
 }
 
+/**
+ * Load the resource with the specified reference, type and relationship.
+ * 
+ * @param href
+ *            The reference to the resource to be loaded.
+ * @param type
+ *            The type of the resource to be loaded.
+ * @param rel
+ *            The relationship of the resource to be loaded.
+ */
 function loadLink(href, type, rel) {
 	var link = document.createElement("link");
-	
+
 	link.href = href;
 	link.type = type;
 	link.rel = rel;
-	
-	links.push(link);
-	
-	notity();
+
+	loadElement(link);
+}
+
+/**
+ * Load the specified element by appending it to the head of the document.
+ * 
+ * @param element
+ *            The element to be appended to the head of the document.
+ */
+function loadElement(element) {
+	if (ready) {
+		document.head.appendChild(element);
+	} else {
+		elements.push(element);
+	}
 }
