@@ -1,5 +1,5 @@
-// the initiation methods to be called when the document is ready
-var initiations = [];
+// the initialisation methods to be called when the document is ready
+var initialisations = [];
 
 // the scripts to be appended to the document's head when the document is ready
 var scripts = [];
@@ -18,18 +18,18 @@ var INDICATOR_LABEL_INITIATION = "calling %1()";
 var INDICATOR_LABEL_SCRIPT = "loading script %1";
 var INDICATOR_LABEL_LINK = "loading resource %1";
 
-// call all initiation functions and load all scripts and links when the
+// call all initialisation functions and load all scripts and links when the
 // document is ready
 window.onload = function() {
 	ready = true;
 
-	initiateIndicators(initiations.length + scripts.length + links.length);
+	initialiseIndicators(initialisations.length + scripts.length + links.length);
 
 	for (var i = 0; i < initiations.length; i++) {
 		updateIndicators(INDICATOR_LABEL_INITIATION.replace("%1",
-				initiations[i].name));
+				initialisations[i].name));
 
-		initiations[i]();
+		initialisations[i]();
 	}
 
 	for (var i = 0; i < scripts.length; i++) {
@@ -54,11 +54,11 @@ window.onload = function() {
  * @param initiate
  *            The function the be called when the document is ready.
  */
-function onReady(initiate) {
+function onReady(initialisation) {
 	if (ready) {
-		initiate();
+		initialisation();
 	} else {
-		initiations.push(initiate);
+		initiations.push(initialisation);
 	}
 }
 
@@ -111,13 +111,13 @@ function loadLink(href, type, rel) {
 }
 
 /**
- * Initiate the indicators in the current document by setting the size and to
+ * Initialise the indicators in the current document by setting the size and to
  * current step (0).
  * 
  * @param size
  *            The size of the indicator.
  */
-function initiateIndicators(size) {
+function initialiseIndicators(size) {
 	var indicators = document.getElementsByClassName(INDICATOR_CLASSNAME);
 
 	for (var i = 0; i < indicators.length; i++) {
@@ -153,9 +153,9 @@ function updateIndicators(label) {
 }
 
 /**
- * Finish the indicators in the current document by removing all data.
+ * Finalise the indicators in the current document by removing all data.
  */
-function finishIndicators() {
+function finaliseIndicators() {
 	var indicators = document.getElementsByClassName(INDICATOR_CLASSNAME);
 
 	for (var i = 0; i < indicators.length; i++) {
