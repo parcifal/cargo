@@ -11,6 +11,8 @@ var links = [];
 var ready = false;
 
 var INDICATOR_CLASSNAME = "cargo-load";
+var INDICATOR_CLASSNAME_IDLE = "idle";
+var INDICATOR_CLASSNAME_ACTIVE = "active";
 
 var INDICATOR_LABEL_INITIATION = "calling %1()";
 var INDICATOR_LABEL_SCRIPT = "loading script %1";
@@ -41,7 +43,7 @@ window.onload = function() {
 
 		document.head.appendChild(links[i]);
 	}
-	
+
 	finishIndicators();
 };
 
@@ -108,6 +110,13 @@ function loadLink(href, type, rel) {
 	}
 }
 
+/**
+ * Initiate the indicators in the current document by setting the size and to
+ * current step (0).
+ * 
+ * @param size
+ *            The size of the indicator.
+ */
 function initiateIndicators(size) {
 	var indicators = document.getElementsByClassName(INDICATOR_CLASSNAME);
 
@@ -115,18 +124,25 @@ function initiateIndicators(size) {
 		indicators[i].dataset.cargoSize = size;
 		indicators[i].dataset.cargoStep = 0;
 
-		indicators[i].classList.remove("idle");
-		indicators[i].classList.add("active");
+		indicators[i].classList.remove(INDICATOR_CLASSNAME_IDLE);
+		indicators[i].classList.add(INDICATOR_CLASSNAME_ACTIVE);
 	}
 }
 
+/**
+ * Update the indicator by incrementing the step and assigning it with the
+ * specified label.
+ * 
+ * @param label
+ *            The label of the next step.
+ */
 function updateIndicators(label) {
 	var indicators = document.getElementsByClassName(INDICATOR_CLASSNAME);
 
 	for (var i = 0; i < indicators.length; i++) {
 		var step = parseInt(indicators[i].dataset.cargoStep);
 		var size = parseInt(indicators[i].dataset.cargoSize);
-		
+
 		step++;
 
 		indicators[i].dataset.cargoStep = step;
@@ -136,6 +152,9 @@ function updateIndicators(label) {
 	}
 }
 
+/**
+ * Finish the indicators in the current document by removing all data.
+ */
 function finishIndicators() {
 	var indicators = document.getElementsByClassName(INDICATOR_CLASSNAME);
 
@@ -146,7 +165,7 @@ function finishIndicators() {
 		delete indicators[i].dataset.cargoPercentageDone;
 		delete indicators[i].dataset.cargoPercentageLeft;
 
-		indicators[i].classList.remove("active");
-		indicators[i].classList.add("idle");
+		indicators[i].classList.remove(INDICATOR_CLASSNAME_ACTIVE);
+		indicators[i].classList.add(INDICATOR_CLASSNAME_IDLE);
 	}
 }
