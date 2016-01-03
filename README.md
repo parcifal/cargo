@@ -1,14 +1,14 @@
 # Cargo
-Call initialization functions and load resources and scripts when the document is ready.
+Call initialisation functions and load resources and scripts when the document is ready.
 
-## Defining an initiation function
-An initiation function is a function that will be called when the document is ready. To define a function as an initiation function, simply call the `onReady` function with the initiation function as the first parameter..
+## Defining an initialisation function
+An initialisation function is a function that will be called when the document is ready. To define a function as an initialisation function, simply call the `onReady` function with the initialisation function as the first parameter..
 
 ```
-onReady(myInitiation);
+onReady(myInitialisation);
 
-function myInitiation() {
-  console.log("I'm initiating!");
+function myInitialisation() {
+  console.log("I'm initialising!");
 }
 ```
 
