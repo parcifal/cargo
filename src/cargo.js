@@ -18,6 +18,9 @@ var INDICATOR_LABEL_INITIATION = "calling %1()";
 var INDICATOR_LABEL_SCRIPT = "loading script %1";
 var INDICATOR_LABEL_LINK = "loading resource %1";
 
+// used to store JSON temporarily
+var tempJSON = null;
+
 // call all initialisation functions and load all scripts and links when the
 // document is ready
 window.onload = function() {
@@ -69,6 +72,7 @@ function onReady(initialisation) {
  *            The source of the script to be loaded.
  * @param async
  *            Whether or not the script should run asynchronous.
+ * @return The loaded script.
  */
 function loadScript(src, async) {
 	var script = document.createElement("script");
@@ -84,6 +88,8 @@ function loadScript(src, async) {
 	} else {
 		scripts.push(script);
 	}
+
+	return script;
 }
 
 /**
@@ -95,6 +101,7 @@ function loadScript(src, async) {
  *            The type of the resource to be loaded.
  * @param rel
  *            The relationship of the resource to be loaded.
+ * @return The loaded link.
  */
 function loadLink(href, type, rel) {
 	var link = document.createElement("link");
@@ -108,6 +115,22 @@ function loadLink(href, type, rel) {
 	} else {
 		links.push(link);
 	}
+
+	return link;
+}
+
+/**
+ * Load a JSONP file from the specified source. When loaded the specified
+ * callback function will be called with the JSON data as the first parameter.
+ * 
+ * @param src
+ *            The source of the JSONP file.
+ * @param callback
+ *            The function to call when the JSONP file is loaded with the
+ *            contained JSON data as the first parameter.
+ */
+function loadJSONP(src, callback) {
+	loadScript(src + "&callback=" + callback.name, true);
 }
 
 /**
