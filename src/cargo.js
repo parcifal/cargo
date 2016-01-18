@@ -28,7 +28,7 @@ window.onload = function() {
 
 	initialiseIndicators(initialisations.length + scripts.length + links.length);
 
-	for (var i = 0; i < initiations.length; i++) {
+	for (var i = 0; i < initialisations.length; i++) {
 		updateIndicators(INDICATOR_LABEL_INITIATION.replace("%1",
 				initialisations[i].name));
 
@@ -47,7 +47,7 @@ window.onload = function() {
 		document.head.appendChild(links[i]);
 	}
 
-	finishIndicators();
+	finaliseIndicators();
 };
 
 /**
@@ -61,7 +61,7 @@ function onReady(initialisation) {
 	if (ready) {
 		initialisation();
 	} else {
-		initiations.push(initialisation);
+		initialisations.push(initialisation);
 	}
 }
 
